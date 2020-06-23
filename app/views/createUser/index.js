@@ -5,6 +5,7 @@ import {
 	TouchableOpacity, TextInput,
 } from 'react-native';
 
+import createUser from '../../api/user';
 
 class CreateUser extends Component {
 	constructor(props) {
@@ -58,14 +59,16 @@ class CreateUser extends Component {
 				<TouchableOpacity
 					style={styles.btn}
 					onPress={() => {
-						const user = {
+						console.log({ Email, Password, Phone });
+						const usr = {
 							email: Email,
-							password: Password,
 							phoneNumber: Phone,
-							displayName: 'Hello',
+							password: Password,
+							displayName: 'Person X',
 						};
 
-						console.log({ Email, Password, Phone });
+						createUser.post(usr)
+							.then(rows => console.log({ rows }));
 					}}
 				>
 					<Text style={styles.title}>Save</Text>
