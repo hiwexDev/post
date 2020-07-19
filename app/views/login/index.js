@@ -108,9 +108,10 @@ class Login extends Component {
 					<TouchableOpacity
 						style={styles.btn}
 						onPress={() => {
-							auth().signInWithEmailAndPassword(Email, Password)
-								.then(usr => console.log({ usr }))
-								.catch(err => console.log({ err }));
+							this.props.navigation.navigate('CreateUser', { ID: 1 });
+							// auth().signInWithEmailAndPassword(Email, Password)
+							// 	.then(usr => this.props.navigation.navigate('CreateUser', { ID: 1 }))
+							// 	.catch(err => console.log({ err }));
 						}}
 					>
 						<Text style={styles.title}>Login</Text>

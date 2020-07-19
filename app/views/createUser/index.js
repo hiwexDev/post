@@ -25,6 +25,8 @@ class CreateUser extends Component {
          * password,
          * displayName,
 		 */
+
+		 console.log(this.props.route);
 	}
 
 	render() {

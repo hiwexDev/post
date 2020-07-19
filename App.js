@@ -9,10 +9,11 @@
 import React, { Component } from 'react';
 import CreateUser from './app/views/createUser';
 import Login from './app/views/login';
+import AppStack from './app/navigator/stack';
 
 class App extends Component {
     render() {
-        return <Login/>;
+        return <AppStack/>;
     }
 }
 
