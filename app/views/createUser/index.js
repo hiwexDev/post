@@ -1,11 +1,16 @@
 // Dependencies
 import React, { Component } from 'react';
-import {
-	View, StyleSheet, Text,
-	TouchableOpacity, TextInput,
-} from 'react-native';
+import { View } from 'react-native';
 
+
+// Components
+import Button from '../../components/button';
+import Input from '../../components/input';
 import createUser from '../../api/user';
+
+// Styles
+import { styles } from './styles';
+
 
 class CreateUser extends Component {
 	constructor(props) {
@@ -18,17 +23,6 @@ class CreateUser extends Component {
 		};
 	}
 
-	componentDidMount() {
-		/**
-		 * email,
-         * phoneNumber,
-         * password,
-         * displayName,
-		 */
-
-		 console.log(this.props.route);
-	}
-
 	render() {
 		const { Email, Password, Phone } = this.state;
 
@@ -36,31 +30,35 @@ class CreateUser extends Component {
 
 		return (
 			<View style={styles.container}>
-				<Text style={styles.title}>Email:</Text>
-				<TextInput
-					style={styles.text}
-					value={Email}
-					onChangeText={val => this.setState({ Email: val })}
+				<Input
+					title="Email"
+					custom={{
+						value:{Email},
+						onChangeText: val => this.setState({ Email: val }),
+						secureTextEntry: true,
+					}}
 				/>
 
-				<Text style={styles.title}>Password:</Text>
-				<TextInput
-					secureTextEntry
-					style={styles.text}
-					value={Password}
-					onChangeText={val => this.setState({ Password: val })}
+				<Input
+					title="Password"
+					custom={{
+						value:{Password},
+						onChangeText: val => this.setState({ Password: val }),
+						secureTextEntry: true,
+					}}
 				/>
 
-				<Text style={styles.title}>Phone:</Text>
-				<TextInput
-					style={styles.text}
-					value={Phone}
-					onChangeText={val => this.setState({ Phone: val })}
+				<Input
+					title="Phone"
+					custom={{
+						value:{Phone},
+						onChangeText: val => this.setState({ Phone: val }),
+					}}
 				/>
 
-				<TouchableOpacity
-					style={styles.btn}
-					onPress={() => {
+				<Button
+					title="Save"
+					action={() => {
 						console.log({ Email, Password, Phone });
 						const usr = {
 							email: Email,
@@ -72,44 +70,11 @@ class CreateUser extends Component {
 						createUser.post(usr)
 							.then(rows => console.log({ rows }));
 					}}
-				>
-					<Text style={styles.title}>Save</Text>
-				</TouchableOpacity>
+				/>
 			</View>
 		);
 	}
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#34495e',
-		paddingVertical: 20,
-		paddingHorizontal: 30,
-	},
-	title: {
-		color: '#FFF',
-		fontSize: 16,
-		fontWeight: 'bold',
-		marginVertical: 10,
-	},
-	text: {
-		borderWidth: 1,
-		borderColor: '#FFF',
-		height: 45,
-		width: '100%',
-		paddingHorizontal: 10,
-		color: '#FFF',
-	},
-	btn: {
-		borderWidth: 1,
-		borderColor: '#FFF',
-		height: 45,
-		width: '100%',
-		marginTop: 100,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-});
-
 export default CreateUser;
+

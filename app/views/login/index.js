@@ -2,54 +2,20 @@
 import React, { Component } from 'react';
 import {
 	View, TextInput, TouchableOpacity,
-	Text, StyleSheet, Image,
+	Text, Image,
 } from 'react-native';
-
 import auth from '@react-native-firebase/auth';
 
-import userImg from '../../assets/icons/usuario.png'
+// Components
+import Loading from '../../components/loading';
+import Button from '../../components/button';
+import Input from '../../components/input';
 
-export const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#34495e',
-		paddingVertical: 20,
-		paddingHorizontal: 30,
-	},
-	subcontainer: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	title: {
-		color: '#FFF',
-		fontSize: 16,
-		fontWeight: 'bold',
-		marginVertical: 10,
-	},
-	text: {
-		borderWidth: 1,
-		borderColor: '#FFF',
-		height: 45,
-		width: '100%',
-		paddingHorizontal: 10,
-		color: '#FFF',
-	},
-	btn: {
-		borderWidth: 1,
-		borderColor: '#FFF',
-		height: 45,
-		width: '100%',
-		marginTop: 40,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	img: {
-		width: 100,
-		height: 100,
-		tintColor: '#FFF',
-	},
-});
+// Styles
+import { styles } from './styles';
+
+
+import userImg from '../../assets/icons/usuario.png'
 
 class Login extends Component {
 	constructor(props) {
@@ -60,64 +26,57 @@ class Login extends Component {
 			Password: null,
 		};
 	}
-	componentDidMount() {
-		// auth()
-		// 	.createUserWithEmailAndPassword('sarah.lane@gmail.com', 'SuperSecretPassword!')
-		// 	.then(() => {
-		// 		console.log('User account created & signed in!');
-		// 	})
-		// 	.catch(error => {
-		// 		if (error.code === 'auth/email-already-in-use') {
-		// 		console.log('That email address is already in use!');
-		// 		}
-
-		// 		if (error.code === 'auth/invalid-email') {
-		// 		console.log('That email address is invalid!');
-		// 		}
-
-		// 		console.error(error);
-		// 	});
-	}
 
 	render() {
 		const { Email, Password } = this.state;
 		return (
-			<View style={styles.container}>
-				<View style={styles.subcontainer}>
-					<Image
-						source={userImg}
-						style={styles.img}
-					/>
-				</View>
+			<Loading loading={false}>
+				<View style={styles.container}>
+					<View style={styles.subcontainer}>
+						<Image
+							source={userImg}
+							style={styles.img}
+						/>
+					</View>
 
-				<View style={styles.subcontainer}>
-					<Text style={styles.title}>Email</Text>
-					<TextInput
-						style={styles.text}
-						value={Email}
-						onChangeText={em => this.setState({ Email: em })}
-					/>
-					<Text style={styles.title}>Password</Text>
-					<TextInput
-						style={styles.text}
-						value={Password}
-						onChangeText={psw => this.setState({ Password: psw })}
-						secureTextEntry
-					/>
+					<View style={styles.subcontainer}>
 
-					<TouchableOpacity
-						style={styles.btn}
-						onPress={() => {
-							this.props.navigation.navigate('CreateUser', { ID: 1 });
-							// auth().signInWithEmailAndPassword(Email, Password)
-							// 	.then(usr => this.props.navigation.navigate('CreateUser', { ID: 1 }))
-							// 	.catch(err => console.log({ err }));
-						}}
-					>
-						<Text style={styles.title}>Login</Text>
-					</TouchableOpacity>
+						<Input
+							title="Email"
+							custom={{
+								value:{Email},
+								onChangeText: em => this.setState({ Email: em }),
+							}}
+						/>
+
+						<Input
+							title="Password"
+							custom={{
+								value:{Password},
+								onChangeText: psw => this.setState({ Password: psw }),
+								secureTextEntry: true,
+							}}
+						/>
+
+						<Button
+							title="Login"
+							action={() => {
+								console.log({ Email, Password });
+								this.props.navigation.navigate('CreateUser', { ID: 1 });
+								// auth().signInWithEmailAndPassword(Email, Password)
+								// 	.then(usr => this.props.navigation.navigate('CreateUser', { ID: 1 }))
+								// 	.catch(err => console.log({ err }));
+							}}
+						/>
+
+						<TouchableOpacity
+							onPress={() => this.props.navigation.navigate('CreateUser')}
+						>
+							<Text style={{ color: '#FFF', fontWeight: 'bold', marginTop: 10 }}>Create An Account</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View>
+			</Loading>
 		);
 	}
 }
