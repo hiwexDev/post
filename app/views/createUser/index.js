@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 
 // Components
@@ -35,7 +36,6 @@ class CreateUser extends Component {
 					custom={{
 						value:{Email},
 						onChangeText: val => this.setState({ Email: val }),
-						secureTextEntry: true,
 					}}
 				/>
 
@@ -59,7 +59,6 @@ class CreateUser extends Component {
 				<Button
 					title="Save"
 					action={() => {
-						console.log({ Email, Password, Phone });
 						const usr = {
 							email: Email,
 							phoneNumber: Phone,
@@ -68,7 +67,14 @@ class CreateUser extends Component {
 						};
 
 						createUser.post(usr)
-							.then(rows => console.log({ rows }));
+							.then((rows) => {
+								auth().signInWithEmailAndPassword(Email, Password)
+									.then((user) => {
+										console.log({ user, usr });
+										this.props.navigation.navigate('Post')
+									})
+									.catch(err => console.log({ err }));
+							});
 					}}
 				/>
 			</View>

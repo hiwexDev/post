@@ -27,15 +27,15 @@ function AppStack() {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen
-					name="Post"
-					component={Routes.Posts}
+					name="Login"
+					component={Routes.Login}
 					options={{
 						headerShown: false,
 					}}
 				/>
 				<Stack.Screen
-					name="Login"
-					component={Routes.Login}
+					name="Post"
+					component={Routes.Posts}
 					options={{
 						headerShown: false,
 					}}

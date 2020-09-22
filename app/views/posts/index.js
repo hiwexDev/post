@@ -1,8 +1,7 @@
 // Dependencies
 import React, { useEffect, useState } from 'react';
 import {
-	View, TextInput, TouchableOpacity,
-	Text, Image,
+	View, ScrollView,
 } from 'react-native';
 
 // Components
@@ -13,38 +12,33 @@ import { styles } from './styles';
 
 
 const Posts = () => {
-    const [state, setState] = useState(0);
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-        console.log('update');
-
-        return () => console.log('prev');
-    });
-    
-    useEffect(() => {
-        console.log('mount');
-    }, []);
-
-    useEffect(() => {
-        console.log('update state');
-    }, [state, count])
-
+    const arr = [
+        {name: 'name 1'},
+        {name: 'name 2'},
+        {name: 'name 3'},
+        {name: 'name 4'},
+        {name: 'name 5'},
+        {name: 'name 6'},
+        {name: 'name 7'},
+        {name: 'name 8'},
+        {name: 'name 9'},
+        {name: 'name 10'},
+        {name: 'name 11'},
+        {name: 'name 12'},
+    ]
     return (
         <View style={styles.container}>
-            <Button
-                title="use"
-                action={() => {
-                    setState(1 + state)
-                }}
-            />
-
-            <Button
-                title="count"
-                action={() => {
-                    setCount(1 + count)
-                }}
-            />
+            <ScrollView>
+                {
+                    arr.map(i => (
+                        <Button
+                            title={i.name}
+                            action={() => console.log(i.name)}
+                        />
+                    ))
+                }
+            </ScrollView>
+           
         </View>
     );
 }
