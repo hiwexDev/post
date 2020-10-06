@@ -1,66 +1,36 @@
 // Dependencies
 import React, { useEffect, useState } from 'react';
 import {
-	View, FlatList, Text
+	View, Image
 } from 'react-native';
 
 // Components
 import Button from '../../components/button';
+import Modal from '../../components/modal';
 
 // Styles
 import { styles } from './styles';
+import close from '../../assets/icons/close.png'
+import { TouchableOpacity } from 'react-native';
 
 
 const Posts = () => {
-    const [arr, setArr] = useState([]);
-    const [data, setData] = useState([]);
-    const [counter, setCounter] = useState(0);
-    const [refreshing, setRefresh] = useState(false);
-
-    const getData = () => {
-        const end = counter + 30;
-        const slice = data.slice(counter, end);
-        setArr([...arr, ...slice]);
-        setCounter(end);
-    }
-
-    useEffect(() => {
-        const _arr = [];
-        for (let index = 0; index < 100; index++) {
-            _arr.push({ name: `name ${index}` });
-        }
-
-        setData(_arr);
-        const end = counter + 30;
-        const slice = _arr.slice(counter, end);
-        setArr(slice);
-        setCounter(end);
-    }, [])
-
+    const [view, setView] = useState(false);
     return (
         <View style={styles.container}>
-            <FlatList
-                data={arr}
-                renderItem={({ item, index }) => (
-                    <Button title={item.name} action={() => console.log(item.name)}/>
-                )}
-                showsVerticalScrollIndicator={false}
-                ItemSeparatorComponent={() => (
-                    <View style={{ height: 10, width: '100%', backgroundColor: 'black' }}/>
-                )}
-                ListEmptyComponent={() => (
-                    <View style={{ flex: 1, marginTop: 30 }}>
-                        <Text>Empty</Text>
-                    </View>
-                )}
-                onEndReached={getData}
-                refreshing={refreshing}
-                onRefresh={() => {
-                    setArr([]);
-                    setCounter(0);
-                    console.log('Hola');
+            <Button
+                title="Show"
+                action={() => {
+                    setView(true);
                 }}
             />
+
+            <Modal
+                visible={view}
+                onClose={() => setView(false)}
+            >
+                <View style={{ width: 30, height: 30, backgroundColor: 'red' }}></View>
+            </Modal>
         </View>
     );
 }
