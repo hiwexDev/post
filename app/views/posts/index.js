@@ -1,17 +1,15 @@
 // Dependencies
 import React, { useEffect, useState } from 'react';
-import {
-	View, Image
-} from 'react-native';
+import { View, TextInput } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
 // Components
 import Button from '../../components/button';
 import Modal from '../../components/modal';
+import Input from '../../components/input';
 
 // Styles
 import { styles } from './styles';
-import close from '../../assets/icons/close.png'
-import { TouchableOpacity } from 'react-native';
 
 
 const Posts = () => {
@@ -21,8 +19,22 @@ const Posts = () => {
             <Button
                 title="Show"
                 action={() => {
-                    setView(true);
-                }}
+					const options = {
+						title: 'Titulo del Picker',
+						customButtons: [
+							{name: 'fb', title: 'Facebook'},
+							{name: 'otro', title: 'Otro'}
+						],
+						cancelButton: 'Cancelar',
+						takePhotoButtonTitle: 'Tomar Foto',
+						chooseFromLibraryButtonTitle: 'Abrir Galeria',
+						noData: true,
+					};
+
+					ImagePicker.showImagePicker(options, (res) => {
+						console.log({ res });
+					});
+				}}
             />
 
             <Modal

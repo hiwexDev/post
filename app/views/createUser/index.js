@@ -1,7 +1,8 @@
 // Dependencies
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import ImagePicker from 'react-native-image-picker';
 
 
 // Components
@@ -11,6 +12,7 @@ import createUser from '../../api/user';
 
 // Styles
 import { styles } from './styles';
+import userImg from '../../assets/icons/usuario.png'
 
 
 class CreateUser extends Component {
@@ -21,16 +23,53 @@ class CreateUser extends Component {
 			Email: null,
 			Password: null,
 			Phone: null,
+			uri: null,
 		};
 	}
 
 	render() {
-		const { Email, Password, Phone } = this.state;
+		const { Email, Password, Phone, uri } = this.state;
 
 		// secureTextEntry
 
 		return (
 			<View style={styles.container}>
+				<TouchableOpacity
+					style={{
+						height: 200,
+						width: 200,
+						borderRadius: 100,
+						borderColor: '#FFF',
+						borderWidth: 1,
+						justifyContent: 'center',
+						alignItems: 'center'
+					}}
+
+					onPress={() => {
+						const options = {
+							title: 'Selecciona foto de perfil',
+							cancelButton: 'Cancelar',
+							takePhotoButtonTitle: 'Tomar Foto',
+							chooseFromLibraryButtonTitle: 'Abrir Galeria',
+							noData: true,
+						};
+	
+						ImagePicker.showImagePicker(options, (res) => {
+							if (!res.didCancel) {
+								this.setState({ uri: res.uri });
+							}
+						});
+					}}
+				>
+					<Image
+						source={uri ? {uri} : userImg}
+						style={{
+							height: 120,
+							width: 120,
+						}}
+					/>
+				</TouchableOpacity>
+
 				<Input
 					title="Email"
 					custom={{
