@@ -9,6 +9,7 @@ import ImagePicker from 'react-native-image-picker';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import createUser from '../../api/user';
+import { UploadFile } from '../../utils/uploadFile';
 
 // Styles
 import { styles } from './styles';
@@ -56,7 +57,11 @@ class CreateUser extends Component {
 	
 						ImagePicker.showImagePicker(options, (res) => {
 							if (!res.didCancel) {
-								this.setState({ uri: res.uri });
+								UploadFile(res)
+									.then((file) => {
+										console.log({ file });
+										this.setState({ uri: file.secure_url });
+									});
 							}
 						});
 					}}
@@ -103,17 +108,21 @@ class CreateUser extends Component {
 							phoneNumber: Phone,
 							password: Password,
 							displayName: 'Person X',
+							photoURL: uri,
 						};
 
-						createUser.post(usr)
-							.then((rows) => {
-								auth().signInWithEmailAndPassword(Email, Password)
-									.then((user) => {
-										console.log({ user, usr });
-										this.props.navigation.navigate('Post')
-									})
-									.catch(err => console.log({ err }));
-							});
+
+						console.log({ usr });
+
+						// createUser.post(usr)
+						// 	.then((rows) => {
+						// 		auth().signInWithEmailAndPassword(Email, Password)
+						// 			.then((user) => {
+						// 				console.log({ user, usr });
+						// 				this.props.navigation.navigate('Post')
+						// 			})
+						// 			.catch(err => console.log({ err }));
+						// 	});
 					}}
 				/>
 			</View>
