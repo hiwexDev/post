@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -14,9 +14,22 @@ import { styles } from './styles';
 
 
 
-
-const Posts = () => {
+const Posts = ({ navigation }) => {
     const [view, setView] = useState(false);
+   
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: "Posts",
+            headerStyle: {
+                backgroundColor: '#6685A4',
+            },
+            headerTintColor: '#FFF',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        })
+    }, [navigation])
+
     return (
         <View style={styles.container}>
             <Button

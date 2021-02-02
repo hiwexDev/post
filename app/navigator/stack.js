@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 // Screen
 import Routes from './stackRoutes';
+import Home from './drawer';
 
 // Assets
 import back from '../assets/icons/back.png';
@@ -34,8 +35,8 @@ function AppStack() {
 					}}
 				/>
 				<Stack.Screen
-					name="Post"
-					component={Routes.Posts}
+					name="Home"
+					component={Home}
 					options={{
 						headerShown: false,
 					}}

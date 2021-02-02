@@ -35,7 +35,7 @@ class Login extends Component {
 				if (usr) {
 					this.setState(
 						() => ({ loading: false }),
-						() => this.props.navigation.navigate('Post'),
+						() => this.props.navigation.navigate('Home'),
 					)
 				} else {
 					this.setState({ loading: false });
@@ -78,7 +78,7 @@ class Login extends Component {
 							title="Login"
 							action={() => {
 								auth().signInWithEmailAndPassword(Email, Password)
-									.then(usr => this.props.navigation.navigate('Post'))
+									.then(usr => this.props.navigation.navigate('Home'))
 									.catch(err => console.log({ err }));
 							}}
 						/>
