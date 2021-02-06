@@ -1,7 +1,8 @@
 // Dependencies
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import { useIsDrawerOpen } from '@react-navigation/drawer'
 
 // Components
 import Button from '../../components/button';
@@ -12,10 +13,13 @@ import { UploadFile } from '../../utils/uploadFile';
 // Styles
 import { styles } from './styles';
 
+import drawer from '../../assets/icons/drawer.png';
+
 
 
 const Posts = ({ navigation }) => {
     const [view, setView] = useState(false);
+    const isOpen = useIsDrawerOpen();
    
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -27,31 +31,12 @@ const Posts = ({ navigation }) => {
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
+            headerShown: true,
         })
     }, [navigation])
 
     return (
         <View style={styles.container}>
-            <Button
-                title="Show"
-                action={() => {
-					const options = {
-						title: 'Titulo del Picker',
-						customButtons: [
-							{name: 'fb', title: 'Facebook'},
-							{name: 'otro', title: 'Otro'}
-						],
-						cancelButton: 'Cancelar',
-						takePhotoButtonTitle: 'Tomar Foto',
-						chooseFromLibraryButtonTitle: 'Abrir Galeria',
-                        noData: true,
-                        quality: 0
-					};
-
-					ImagePicker.showImagePicker(options, UploadFile);
-				}}
-            />
-
             <Modal
                 visible={view}
                 onClose={() => setView(false)}
