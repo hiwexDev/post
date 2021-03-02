@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Service } from 'axios-middleware';
 
-const base = 'https://us-central1-blog-6e77a.cloudfunctions.net/';
+const base = 'http://localhost:5000/blog-6e77a/us-central1/';
 
 class Register {
 	constructor() {

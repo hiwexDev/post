@@ -111,18 +111,15 @@ class CreateUser extends Component {
 							photoURL: uri,
 						};
 
-
-						console.log({ usr });
-
-						// createUser.post(usr)
-						// 	.then((rows) => {
-						// 		auth().signInWithEmailAndPassword(Email, Password)
-						// 			.then((user) => {
-						// 				console.log({ user, usr });
-						// 				this.props.navigation.navigate('Post')
-						// 			})
-						// 			.catch(err => console.log({ err }));
-						// 	});
+						createUser.post(usr)
+							.then((rows) => {
+								auth().signInWithEmailAndPassword(Email, Password)
+									.then((user) => {
+										console.log({ user, usr });
+										this.props.navigation.navigate('Home')
+									})
+									.catch(err => console.log({ err }));
+							});
 					}}
 				/>
 			</View>

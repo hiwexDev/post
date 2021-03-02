@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
     subcontainer: {
         height: '80%',
         width: '90%',
-        backgroundColor: '#FFF',
+        backgroundColor: '#6685A4',
+        paddingHorizontal: 10,
     },
     headerContainer: {
         height: 45,
@@ -19,11 +20,10 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingHorizontal: 10,
     },
     btnClose: {
-        width: 30,
-        height: 30,
-        tintColor: '#000',
+        width: 25,
+        height: 25,
+        tintColor: '#FFF',
     }
 });
