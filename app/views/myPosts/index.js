@@ -35,6 +35,10 @@ const Posts = ({ navigation }) => {
     const [content, setContent] = useState('');
     const [image, setImage] = useState('');
     const [posts, setPosts] = useState([]);
+    const [errors, setErrors] = useState({
+        title: '',
+        content: '',
+    });
 
     useEffect(() => {
         postsAPI.get()
@@ -70,6 +74,10 @@ const Posts = ({ navigation }) => {
         setTitle('');
         setImage('');
         setView(false);
+        setErrors({
+            title: '',
+            content: '',
+        });
     }
 
     const renderItem = ({item, index}) => (
@@ -97,14 +105,23 @@ const Posts = ({ navigation }) => {
                     title="Title"
                     custom={{
                         value:{title},
-                        onChangeText: em => setTitle(em),
+                        onChangeText: (em) => {
+                            setTitle(em);
+                            setErrors(_errors => ({ ..._errors, title: '' }));
+                        },
                     }}
                 />
+
+                {errors.title ? <Text style={styles.errorLabel}>{errors.title}</Text> : null}
+
                 <Input
                     title="Content"
                     custom={{
                         value:{content},
-                        onChangeText: em => setContent(em),
+                        onChangeText: (em) => {
+                            setContent(em);
+                            setErrors(_errors => ({ ..._errors, content: '' }));
+                        },
                         multiline: true,
                         style: {
                             borderWidth: 1,
@@ -116,6 +133,9 @@ const Posts = ({ navigation }) => {
                         }
                     }}
                 />
+
+                {errors.content ? <Text style={styles.errorLabel}>{errors.content}</Text> : null}
+
                 <Button
                     action={() => {
                         const options = {
@@ -129,7 +149,9 @@ const Posts = ({ navigation }) => {
 						ImagePicker.showImagePicker(options, (res) => {
 							if (!res.didCancel) {
 								UploadFile(res)
-									.then((file) => setImage(file.secure_url))
+									.then((file) => {
+                                        setImage(file.secure_url);
+                                    })
                                     .catch(err => console.log({ err }));
 							}
 						});
@@ -137,14 +159,24 @@ const Posts = ({ navigation }) => {
                     title="Load Image"
                 />
 
-                {image ? (<Text style={{ color: 'red', marginTop: 5 }}>Image Loaded</Text>) : null}
+                {image ? (<Text style={styles.imageLoaded}>Image Loaded</Text>) : null}
                 <Button
                     action={() => {
-                        postsAPI.post({ image, content, title })
-                            .then(({ data }) => {
-                                setPosts((_posts) => ([..._posts, data]));
-                                cleanStates();
-                            });
+                        let err = {};
+
+                        if(!title) err = {...err, title: 'Please fill in the title field'};
+                        if(!content) err = {...err, content: 'Please fill in the content field'};
+
+                        if (err.title) {
+                            setErrors(_errors => ({ ..._errors, ...err }));
+                        } else {
+                            postsAPI.post({ image, content, title })
+                                .then(({ data }) => {
+                                    setPosts((_posts) => ([..._posts, data]));
+                                    cleanStates();
+                                });
+                        }
+
                     }}
                     title="Save"
                 />

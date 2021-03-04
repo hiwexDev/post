@@ -34,7 +34,13 @@ export const styles = StyleSheet.create({
 		marginTop: 5,
 	},
 	imageLoaded: {
-		color:'red',
+		color: '#FFF',
+		fontWeight: 'bold',
 		marginTop: 5,
-	}
+	},
+	errorLabel: {
+		color: 'red',
+		fontWeight: 'bold',
+		marginTop: 5,
+	},
 });
