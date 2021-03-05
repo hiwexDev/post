@@ -78,6 +78,7 @@ class CreateUser extends Component {
 				<Input
 					title="Email"
 					custom={{
+						autoCapitalize: 'none',
 						value:{Email},
 						onChangeText: val => this.setState({ Email: val }),
 					}}

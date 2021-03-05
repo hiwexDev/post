@@ -60,6 +60,7 @@ class Login extends Component {
 						<Input
 							title="Email"
 							custom={{
+								autoCapitalize: 'none',
 								value:{Email},
 								onChangeText: em => this.setState({ Email: em }),
 							}}
