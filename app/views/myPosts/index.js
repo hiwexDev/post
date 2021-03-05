@@ -5,9 +5,11 @@ import {
     FlatList, Text,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import auth from '@react-native-firebase/auth';
 
 // API
 import postsAPI from '../../api/post';
+import myPostsAPI from '../../api/myPosts';
 
 
 // Components
@@ -39,11 +41,19 @@ const Posts = ({ navigation }) => {
         title: '',
         content: '',
     });
+    const [uid, setUid] = useState(0);
 
     useEffect(() => {
-        postsAPI.get()
-            .then(({ data = [] }) => {
-                setPosts(data);
+        auth()
+            .onAuthStateChanged((user) => {
+                if (user) {
+                    const { uid } = user;
+                    myPostsAPI.post({ uid })
+                        .then(({ data = [] }) => {
+                            setPosts(data);
+                            setUid(uid);
+                        })
+                }
             })
     }, [])
    
@@ -170,7 +180,7 @@ const Posts = ({ navigation }) => {
                         if (err.title) {
                             setErrors(_errors => ({ ..._errors, ...err }));
                         } else {
-                            postsAPI.post({ image, content, title })
+                            postsAPI.post({ image, content, title, uid })
                                 .then(({ data }) => {
                                     setPosts((_posts) => ([..._posts, data]));
                                     cleanStates();
