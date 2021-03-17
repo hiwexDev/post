@@ -37,12 +37,12 @@ class Request {
 		return this.request({ url: this.url, data: value, method: 'post' });
 	}
 
-	put(value, id) {
-		return this.request({ url: this.url + '/' + id, data: value, method: 'put' });
+	put(value) {
+		return this.request({ url: this.url, data: value, method: 'put' });
 	}
 
-	delete(id) {
-		return this.request({ url: this.url + '/' + id, method: 'delete' });
+	delete(value) {
+		return this.request({ url: this.url, method: 'delete', data: value });
 	}
 }
 

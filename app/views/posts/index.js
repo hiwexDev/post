@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, FlatList, Text } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { useIsDrawerOpen } from '@react-navigation/drawer'
 
@@ -13,13 +13,22 @@ import { UploadFile } from '../../utils/uploadFile';
 // Styles
 import { styles } from './styles';
 
+// API
+import postAPI from '../../api/post';
+
 import drawer from '../../assets/icons/drawer.png';
 
 
 
 const Posts = ({ navigation }) => {
-    const [view, setView] = useState(false);
-    const isOpen = useIsDrawerOpen();
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        postAPI.get()
+            .then(({ data = [] }) => {
+                setPosts(data);
+            })
+    }, [])
    
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -35,14 +44,30 @@ const Posts = ({ navigation }) => {
         })
     }, [navigation])
 
+    const renderItem = ({item, index}) => (
+        <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => {
+                navigation.navigate('ViewPosts');
+            }}
+        >
+            <Image source={{ uri: item.image }} style={styles.itemImage} />
+
+            <View style={styles.textContainerRow}>
+                <Text style={styles.itemTitle}>{item.title}</Text>
+                
+                <Text style={styles.itemContent}>{item.content}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+
     return (
         <View style={styles.container}>
-            <Modal
-                visible={view}
-                onClose={() => setView(false)}
-            >
-                <View style={{ width: 30, height: 30, backgroundColor: 'red' }}></View>
-            </Modal>
+            <FlatList
+                data={posts}
+                renderItem={renderItem}
+                keyExtractor={item => item.uuid}
+            />
         </View>
     );
 }

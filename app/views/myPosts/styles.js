@@ -43,4 +43,27 @@ export const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		marginTop: 5,
 	},
+	textContainerRow: {
+		flex: 1,
+	},
+	buttonContainerRow: {
+		height: 25,
+		width: '100%',
+		justifyContent: 'flex-end',
+		flexDirection: 'row',
+	},
+	buttonTxtRow: {
+		color: '#FFF',
+		fontWeight: 'bold',
+		marginHorizontal: 10,
+	},
 });
+
+export const customStyles = {
+	borderWidth: 1,
+	borderColor: '#FFF',
+	height: 150,
+	width: '100%',
+	paddingHorizontal: 10,
+	color: '#FFF',
+}

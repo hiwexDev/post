@@ -42,6 +42,13 @@ function AppStack() {
 					}}
 				/>
 				<Stack.Screen
+					name="ViewPosts"
+					component={Routes.ViewPosts}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
 					name="CreateUser"
 					component={Routes.CreateUser}
 					options={(nav) => ({
