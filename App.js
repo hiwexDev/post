@@ -11,6 +11,8 @@ import CreateUser from './app/views/createUser';
 import Login from './app/views/login';
 import AppStack from './app/navigator/stack';
 
+
+// No upload
 class App extends Component {
     render() {
         return <AppStack/>;
