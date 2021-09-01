@@ -1,25 +1,29 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 // Screen
 import Routes from './stackRoutes';
+import Home from './drawer';
+
+// Assets
+import back from '../assets/icons/back.png';
 
 const Stack = createStackNavigator();
 
-const Header = () => (
-	<View style={{ width: '100%', height: 45, backgroundColor:'red' }} />
-);
-
-const Button = () => (
+const getButton = ({ navigation }) => (
 	<TouchableOpacity
-		style={{ width: 20, height: 20, backgroundColor: '#000' }}
-		onPress={() => console.log('hello')}
-	/>
+		style={{ flexDirection: 'row' }}
+		onPress={() => navigation.goBack()}
+	>
+		<Image source={back} style={{ width: 15, height: 15, tintColor: '#FFF', marginLeft: 5, marginRight: 5 }}/>
+		<Text style={{ color: '#FFF' }}>Back</Text>
+	</TouchableOpacity>
 );
 
 function AppStack() {
+	// 6685A4
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
@@ -30,7 +34,35 @@ function AppStack() {
 						headerShown: false,
 					}}
 				/>
-				<Stack.Screen name="CreateUser" component={Routes.CreateUser} />
+				<Stack.Screen
+					name="Home"
+					component={Home}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name="ViewPosts"
+					component={Routes.ViewPosts}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name="CreateUser"
+					component={Routes.CreateUser}
+					options={(nav) => ({
+						title: "Create User",
+						headerStyle: {
+							backgroundColor: '#6685A4',
+						},
+						headerTintColor: '#FFF',
+						headerTitleStyle: {
+							fontWeight: 'bold',
+						},
+						headerLeft: () => getButton(nav),
+					})}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Service } from 'axios-middleware';
 
-const base = 'https://us-central1-blog-6e77a.cloudfunctions.net/';
+const base = 'http://localhost:5000/blog-6e77a/us-central1/';
 
 class Register {
 	constructor() {
@@ -37,12 +37,12 @@ class Request {
 		return this.request({ url: this.url, data: value, method: 'post' });
 	}
 
-	put(value, id) {
-		return this.request({ url: this.url + '/' + id, data: value, method: 'put' });
+	put(value) {
+		return this.request({ url: this.url, data: value, method: 'put' });
 	}
 
-	delete(id) {
-		return this.request({ url: this.url + '/' + id, method: 'delete' });
+	delete(value) {
+		return this.request({ url: this.url, method: 'delete', data: value });
 	}
 }
 
