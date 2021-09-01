@@ -17,6 +17,15 @@ import userImg from '../../assets/icons/usuario.png'
 
 
 class CreateUser extends Component {
+	funct(props) {
+		// super(props);
+
+		// this.state = {
+		// 	Email: null,
+		// 	Password: null,
+		// 	Phone: null,
+		// };
+	}
 	constructor(props) {
 		super(props);
 
