@@ -8,6 +8,15 @@ import {
 import createUser from '../../api/user';
 
 class CreateUser extends Component {
+	funct(props) {
+		// super(props);
+
+		// this.state = {
+		// 	Email: null,
+		// 	Password: null,
+		// 	Phone: null,
+		// };
+	}
 	constructor(props) {
 		super(props);
 
