@@ -8,6 +8,56 @@ import {
 import createUser from '../../api/user';
 
 class CreateUser extends Component {
+	funcionesEstrada() {
+		const { Email, Password, Phone } = this.state;
+
+		// secureTextEntry
+
+		return (
+			<View style={styles.container}>
+				<Text style={styles.title}>Email:</Text>
+				<TextInput
+					style={styles.text}
+					value={Email}
+					onChangeText={val => this.setState({ Email: val })}
+				/>
+
+				<Text style={styles.title}>Password:</Text>
+				<TextInput
+					secureTextEntry
+					style={styles.text}
+					value={Password}
+					onChangeText={val => this.setState({ Password: val })}
+				/>
+
+				<Text style={styles.title}>Phone:</Text>
+				<TextInput
+					style={styles.text}
+					value={Phone}
+					onChangeText={val => this.setState({ Phone: val })}
+				/>
+
+				<TouchableOpacity
+					style={styles.btn}
+					onPress={() => {
+						console.log({ Email, Password, Phone });
+						const usr = {
+							email: Email,
+							phoneNumber: Phone,
+							password: Password,
+							displayName: 'Person X',
+						};
+
+						createUser.post(usr)
+							.then(rows => console.log({ rows }));
+					}}
+				>
+					<Text style={styles.title}>Save</Text>
+				</TouchableOpacity>
+			</View>
+		);
+	}
+}
 	constructor(props) {
 		super(props);
 
